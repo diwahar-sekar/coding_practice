@@ -89,6 +89,44 @@ class Solution:
 
         return list1
 
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = collections.defaultdict(set)
+        cols = collections.defaultdict(set)
+        square = collections.defaultdict(set)
+        for row in range(9):
+            for col in range(9):
+                x=board[row][col]
+                if board[row][col]==".":
+                    continue
+                if x in board[row] or x in board[col] or x in square[(row//3, col//3)]:
+                    return False
+                rows[row].add(board[row][col])
+                cols[col].add(board[row][col])
+                square[(row//3, col//3)].add(board[row][col])
+        return True
+
+    def encode(self, strs):
+        # write your code here
+        return ''.join(map(lambda s: f"{len(s)}#{s}", strs))
+    """
+    @param: str: A string
+    @return: decodes a single string to a list of strings
+    """
+    def decode(self, str):
+        # write your code here
+        i = 0
+        res = list()
+        while i < len(str):
+            j = i
+            while str[j] != "#":
+                j += 1
+
+            length = int(str[i:j])
+            i = j + 1
+            j = i + length
+            res.append(str[i:j])
+            i = j
+
 if __name__ == "__main__":
     solution = Solution()
     # print(solution.containsDuplicate([1,2,3,4]))
@@ -97,3 +135,14 @@ if __name__ == "__main__":
     # print(solution.groupAnagrams(strs = ["eat","tea","tan","ate","nat","bat"]))
     # print((solution.topKFrequent(nums = [1,1,1,2,2,3], k = 2)))
     # print(solution.productExceptSelf([1,2,3,4]))
+        #     print(solution.isValidSudoku(board =
+        # [["5","3",".",".","7",".",".",".","."]
+        # ,["6",".",".","1","9","5",".",".","."]
+        # ,[".","9","8",".",".",".",".","6","."]
+        # ,["8",".",".",".","6",".",".",".","3"]
+        # ,["4",".",".","8",".","3",".",".","1"]
+        # ,["7",".",".",".","2",".",".",".","6"]
+        # ,[".","6",".",".",".",".","2","8","."]
+        # ,[".",".",".","4","1","9",".",".","5"]
+        # ,[".",".",".",".","8",".",".","7","9"]]))
+    print(solution.encode())
