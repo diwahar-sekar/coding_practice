@@ -51,10 +51,32 @@ class Solution:
                 s[ord(ch) - ord("a")] += 1
             result[tuple(s)].append(word)
         return result.values()
+
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        """
+        https://leetcode.com/problems/top-k-frequent-elements/
+        """
+
+        count = dict()
+        freq = [[] for i in range(len(nums) + 1)]
+        result = list()
+
+        for num in nums:
+            count[num] = 1 + count.get(num, 0)
+
+        for key, item in count.items():
+            freq[item].append(key)
+
+        for index in range(len(freq) - 1, 1, -1):
+            for num in freq[index]:
+                result.append(num)
+                if len(result) == k:
+                    return result
+
 if __name__ == "__main__":
     solution = Solution()
     # print(solution.containsDuplicate([1,2,3,4]))
     # print(solution.isAnagram(s = "anagram", t = "nagaram"))
     # print(solution.twoSum(nums = [2,7,11,15], target = 9))
     # print(solution.groupAnagrams(strs = ["eat","tea","tan","ate","nat","bat"]))
-#
+    # print((solution.topKFrequent(nums = [1,1,1,2,2,3], k = 2)))
