@@ -1,7 +1,6 @@
 
 from typing import List
 import collections
-
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
         """
